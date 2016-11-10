@@ -13,10 +13,14 @@ public class Main {
 
     public static void testCurrentMove() {
         Point point1 = new Point();
+        point1.x = 0; point1.y = 0;
+        Point point2 = new Point();
+        point2.x = 1; point2.y = 1;
         Field mainField = new Field();
-        mainField.setFigure(point1, "0");
+        mainField.setFigure(point1, "X");
+        mainField.setFigure(point2, "0");
         CurrentMoveController CMC = new CurrentMoveController();
-        System.out.println(CMC.currentMove(mainField));
+        System.out.println("Next move is - " + CMC.currentMove(mainField));
     }
 
     public static  void  testMenuView () {
