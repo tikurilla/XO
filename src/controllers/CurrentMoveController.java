@@ -8,6 +8,7 @@ public class CurrentMoveController {
     public String currentMove(Field field) {
         int xCount = 0;
         int oCount = 0;
+
         for (int i = 0; i < field.getSize(); i = i + 1) {
             for (int j = 0; j < field.getSize(); j = j + 1) {
                 Point cPoint = new Point();
