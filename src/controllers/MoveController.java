@@ -7,9 +7,9 @@ public class MoveController {
 
     // applyFigure checks whether it's possible to set a figure on this point
     public boolean applyFigure (Field field, Point point, String figure) {
-        if (!checkCoordinate(point.x) || !checkCoordinate(point.y)) {
-            assert point.x >= 0;
-            assert point.y >= 0;
+        if (!checkCoordinate(point.getX()) || !checkCoordinate(point.getY())) {
+            assert point.getX() >= 0;
+            assert point.getY() >= 0;
             return false;}
         else {
             if (field.getFigure(point) != null){

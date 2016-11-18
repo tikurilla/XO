@@ -15,16 +15,13 @@ public class Field {
 
     public String getFigure (Point point) {
 
-        return figures[point.x][point.y];
+        return figures[point.getX()][point.getY()];
 
     }
 
     public void setFigure (Point point, String figure) {
 
-        figures[point.x][point.y] = figure;
+        figures[point.getX()][point.getY()] = figure;
 
     }
-
-
-
 }

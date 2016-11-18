@@ -11,9 +11,7 @@ public class CurrentMoveController {
 
         for (int i = 0; i < field.getSize(); i = i + 1) {
             for (int j = 0; j < field.getSize(); j = j + 1) {
-                Point cPoint = new Point();
-                cPoint.x = i;
-                cPoint.y = j;
+                Point cPoint = new Point(i, j);
                 if (field.getFigure(cPoint) == "X") {
                     xCount = xCount + 1;
                 }
