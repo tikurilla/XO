@@ -6,17 +6,17 @@ import model.*;
 public class Main {
 
     public static void main (String[] args) {
-        //testCurrentMove();
+        testCurrentMove();
         //testMenuView();
-        testWinnerController();
+        //testWinnerController();
     }
 
     public static void testCurrentMove() {
         Point point1 = new Point(0, 0);
         Point point2 = new Point(1, 1);
         Field mainField = new Field();
-        mainField.setFigure(point1, "X");
-        mainField.setFigure(point2, "0");
+        mainField.setFigure(point1, Figure.X);
+        mainField.setFigure(point2, Figure.O);
         CurrentMoveController CMC = new CurrentMoveController();
         System.out.println("Next move is - " + CMC.currentMove(mainField));
     }
@@ -38,15 +38,15 @@ public class Main {
         Point p9 = new Point(2, 2);
 
         Field field = new Field();
-        field.setFigure(p1, "0");
-        field.setFigure(p2, "0");
-        field.setFigure(p3, "0");
-        field.setFigure(p4, "0");
+        field.setFigure(p1, Figure.X);
+        field.setFigure(p2, Figure.O);
+        field.setFigure(p3, Figure.X);
+        field.setFigure(p4, Figure.O);
 //        field.setFigure(p5, "0");
 //        field.setFigure(p6, "");
 //        field.setFigure(p7, "");
 //        field.setFigure(p8, "");
-        field.setFigure(p9, "X");
+//        field.setFigure(p9, "X");
 
         WinnerController winnerController = new WinnerController();
         System.out.println("The winner is " + winnerController.getWinner(field));

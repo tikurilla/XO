@@ -1,31 +1,32 @@
 package controllers;
 
 import model.Field;
+import model.Figure;
 import model.Point;
 
 public class CurrentMoveController {
 
-    public String currentMove(Field field) {
+    public Figure currentMove(Field field) {
         int xCount = 0;
         int oCount = 0;
 
         for (int i = 0; i < field.getSize(); i = i + 1) {
             for (int j = 0; j < field.getSize(); j = j + 1) {
                 Point cPoint = new Point(i, j);
-                if (field.getFigure(cPoint) == "X") {
+                if (field.getFigure(cPoint) == Figure.X) {
                     xCount = xCount + 1;
                 }
-                if (field.getFigure(cPoint) == "0") {
+                if (field.getFigure(cPoint) == Figure.O) {
                     oCount = oCount + 1;
                 }
             }
         }
         if (xCount == oCount) {
-            return "X";
+            return Figure.X;
         }
         if (xCount > oCount) {
-            return "0";
+            return Figure.O;
         }
-        return "X";
+        return Figure.X;
     }
 }
