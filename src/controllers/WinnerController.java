@@ -4,7 +4,7 @@ import model.*;
 
 public class WinnerController {
     // BEGIN (write your solution here)
-    public String getWinner (Field field) {
+    public Figure getWinner (Field field) {
 //        Point p1 = new Point();
 //        Point p2 = new Point();
         Point p = new Point(0,0);
