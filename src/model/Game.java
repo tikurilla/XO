@@ -1,37 +1,36 @@
 package model;
 
-import model.Field;
-import model.Player;
-
 public class Game {
 
-    private static final int MIN_FIELDSIZE = 0;
+    private Player player1;
 
-    private static final int MAX_FIELDSIZE = 2;
+    private Player player2;
 
-    private Player[] players;
+    private Field field;
 
-    public Field field;
+    private String name;
 
-    public String name;
-
-    public Player currentPlayer(){
-        return null;
+    public Game(Player player1, Player player2, Field field, String name) {
+        this.player1 = player1;
+        this.player2 = player2;
+        this.field = field;
+        this.name = name;
     }
 
-    public boolean move(final int x, final int y) {
-        if (!checkCoordinate(x) || !checkCoordinate(y)) {
-            assert x >= 0;
-            assert x >= 0;
-            return false;}
-        return true;
+    public Player getPlayer1() {
+        return this.player1;
     }
 
-    private static boolean checkCoordinate(final int coordinate) {
-        if (coordinate < MIN_FIELDSIZE || coordinate > MAX_FIELDSIZE) {
-            return false;
-        }
-        return true;
+    public Player getPlayer2() {
+        return this.player2;
+    }
+
+    public Field getField() {
+        return field;
+    }
+
+    public String getName() {
+        return name;
     }
 
 }
