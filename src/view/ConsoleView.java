@@ -7,6 +7,10 @@ import model.Point;
 
 public class ConsoleView {
 
+    public Point getMoveCoordinate(final Field field) {
+        return new Point(0, 0);
+    }
+
     public void show(final Game game) {
         final Field field = game.getField();
         final StringBuilder fieldBuilder = new StringBuilder();

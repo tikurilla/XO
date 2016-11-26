@@ -1,7 +1,9 @@
 package view;
-import controllers.CurrentMoveController;
-import controllers.WinnerController;
+
 import model.*;
+import controllers.*;
+
+import java.util.Arrays;
 
 public class Main {
 
@@ -9,7 +11,21 @@ public class Main {
         //testCurrentMove();
         //testMenuView();
         //testWinnerController();
-        testConsoleView();
+        testRandom();
+    }
+
+    public static void testRandom() {
+        Point p1 = new Point(0, 0);
+        Point p2 = new Point(1, 0);
+        Point p3 = new Point(2, 0);
+        Field field = new Field();
+        field.setFigure(p1, Figure.X);
+        field.setFigure(p2, Figure.X);
+        field.setFigure(p3, Figure.O);
+        RandomCoordinateGetter randomCoordinateGetter = new RandomCoordinateGetter();
+        Point testPoint = randomCoordinateGetter.getMoveCoordinate(field);
+        System.out.println("Radnom X coordinate: " + testPoint.getX());
+        System.out.println("Radnom Y coordinate: " + testPoint.getY());
     }
 
     public static void testCurrentMove() {
