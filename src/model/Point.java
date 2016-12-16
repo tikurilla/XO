@@ -2,9 +2,9 @@ package model;
 
 public class Point {
 
-    final private int x;
+    private final int x;
 
-    final private int y;
+    private final int y;
 
     public Point (final int x, final int y) {
         this.x = x;
@@ -18,4 +18,5 @@ public class Point {
     public int getY() {
         return y;
     }
+
 }
