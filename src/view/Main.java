@@ -10,7 +10,8 @@ public class Main {
 //        testMenuView();
 //        testWinnerController();
 //          testRandom();
-        testAICoordinateGetter();
+        //testAICoordinateGetter();
+        testConsoleView();
     }
 
     public static void testAICoordinateGetter() {
@@ -96,7 +97,12 @@ public class Main {
         // Creating game
         Player player1 = new Player("Tim", Figure.X);
         Player player2 = new Player("Alex", Figure.O);
-        Game game = new Game(player1, player2, field, "Current game");
+        Game game = new Game.Builder()
+                .player1(player1)
+                .player2(player2)
+                .field(field)
+                .name("Current game")
+                .build();
         ConsoleView consoleView = new ConsoleView();
         consoleView.show(game);
 
@@ -196,7 +202,12 @@ public class Main {
 //        field.setFigure(p7, Figure.O);
 //        field.setFigure(p8, Figure.O);
 //        field.setFigure(p9, Figure.O);
-        Game game = new Game(player1, player2, field, "New Game");
+        Game game = new Game.Builder()
+                .player1(new Player("Timur", Figure.X))
+                .player2(new Player("Lena", Figure.O))
+                .field(field)
+                .name("XO")
+                .build();
         ConsoleView consoleView = new ConsoleView();
         consoleView.show(game);
     }
