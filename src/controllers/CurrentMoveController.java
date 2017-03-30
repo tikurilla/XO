@@ -1,5 +1,6 @@
 package controllers;
 
+import exceptions.InvalidPointException;
 import model.Field;
 import model.Figure;
 import model.Point;
@@ -13,12 +14,23 @@ public class CurrentMoveController {
         for (int i = 0; i < field.getSize(); i = i + 1) {
             for (int j = 0; j < field.getSize(); j = j + 1) {
                 Point cPoint = new Point(i, j);
-                if (field.getFigure(cPoint) == Figure.X) {
-                    xCount = xCount + 1;
+                try {
+                    if (field.getFigure(cPoint) == Figure.X) {
+                        xCount = xCount + 1;
+                    }
                 }
-                if (field.getFigure(cPoint) == Figure.O) {
-                    oCount = oCount + 1;
+                catch (InvalidPointException e) {
+                    e.printStackTrace();
                 }
+                try {
+                    if (field.getFigure(cPoint) == Figure.O) {
+                        oCount = oCount + 1;
+                    }
+                }
+                catch (InvalidPointException e) {
+                    e.printStackTrace();
+                }
+
             }
         }
         if (xCount == oCount) {

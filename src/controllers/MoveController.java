@@ -1,31 +1,18 @@
 package controllers;
+import exceptions.AlreadyOccupiedException;
+import exceptions.InvalidPointException;
 import model.*;
 
 public class MoveController {
-    private static final int MIN_FIELDSIZE = 0;
-    private static final int MAX_FIELDSIZE = 2;
 
-    // applyFigure checks whether it's possible to set a figure on this point
-    public boolean applyFigure (Field field, Point point, Figure figure) {
-        if (!checkCoordinate(point.getX()) || !checkCoordinate(point.getY())) {
-            assert point.getX() >= 0;
-            assert point.getY() >= 0;
-            return false;}
-        else {
-            if (field.getFigure(point) != null){
-                return false;
-            }
-            else {
-                field.setFigure(point, figure);
-                return true;
-            }
+    public void move (Field field, Point point, Figure figure) {
+        try {
+            field.setFigure(point, figure);
+        } catch (InvalidPointException e) {
+            e.printStackTrace();
+        } catch (AlreadyOccupiedException e) {
+            System.out.println("Ooops.. Point is not empty");
         }
-
-    }
-
-    // checkCoordinate checks whether coordinate inside field size
-    private boolean checkCoordinate(final int coordinate) {
-        return !(coordinate < MIN_FIELDSIZE || coordinate > MAX_FIELDSIZE);
     }
 
 }

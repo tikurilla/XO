@@ -1,12 +1,10 @@
 package controllers;
 
+import exceptions.InvalidPointException;
 import model.*;
 
 public class WinnerController {
-    // BEGIN (write your solution here)
     public Figure getWinner (Field field) {
-//        Point p1 = new Point();
-//        Point p2 = new Point();
         Point p = new Point(0,0);
         int identicalAmount;
         // finding winner in lines
@@ -20,8 +18,13 @@ public class WinnerController {
                     identicalAmount = identicalAmount + 1;
                 }
             }
-            if (identicalAmount == field.getSize() - 1) {
-                return field.getFigure(p);
+            try {
+                if (identicalAmount == field.getSize() - 1) {
+                    return field.getFigure(p);
+                }
+            }
+            catch (InvalidPointException e) {
+                e.printStackTrace();
             }
         }
         // finding winner in rows
@@ -35,8 +38,13 @@ public class WinnerController {
                     identicalAmount = identicalAmount + 1;
                 }
             }
-            if (identicalAmount == field.getSize() - 1) {
-                return field.getFigure(p);
+            try {
+                if (identicalAmount == field.getSize() - 1) {
+                    return field.getFigure(p);
+                }
+            }
+            catch (InvalidPointException e) {
+                e.printStackTrace();
             }
         }
         // finding winner in straight diagonal
@@ -49,9 +57,13 @@ public class WinnerController {
                 identicalAmount = identicalAmount + 1;
             }
         }
-
-        if (identicalAmount == field.getSize() - 1) {
-            return field.getFigure(p);
+        try {
+            if (identicalAmount == field.getSize() - 1) {
+                return field.getFigure(p);
+            }
+        }
+        catch (InvalidPointException e) {
+            e.printStackTrace();
         }
         // finding winner in reverse diagonal
         identicalAmount = 0;
@@ -63,19 +75,27 @@ public class WinnerController {
                 identicalAmount = identicalAmount + 1;
             }
         }
-        if (identicalAmount == field.getSize() - 1) {
-            return field.getFigure(p);
+        try {
+            if (identicalAmount == field.getSize() - 1) {
+                return field.getFigure(p);
+            }
+        }
+        catch (InvalidPointException e) {
+            e.printStackTrace();
         }
         return null;
     }
 
     private boolean sameNearbyFigures (Field field, Point p1, Point p2) {
-        if (field.getFigure(p1) != null && field.getFigure(p2) != null
-                && field.getFigure(p1).equals(field.getFigure(p2))) {
-            return true;
+        try {
+            if (field.getFigure(p1) != null && field.getFigure(p2) != null
+                    && field.getFigure(p1).equals(field.getFigure(p2))) {
+                return true;
+            }
+        }
+        catch (InvalidPointException e) {
+            e.printStackTrace();
         }
         return false;
     }
-    // END
-
 }
