@@ -1,17 +1,51 @@
 package view;
 
+import exceptions.InvalidPointException;
 import model.*;
 import controllers.*;
 
 public class Main {
 
+    private static final int ONE_PLAYER_GAME = 1;
+
+    private static final int TWO_PLAYER_GAME = 2;
+
+    private static final int EXIT = 3;
+
     public static void main (String[] args) {
 //        testCurrentMove();
 //        testMenuView();
 //        testWinnerController();
-//          testRandom();
-        //testAICoordinateGetter();
-        testConsoleView();
+//        testRandom();
+//        testAICoordinateGetter();
+//        testConsoleView();
+        MenuView menuView = new MenuView();
+        if (menuView.showMenuWithResult() == TWO_PLAYER_GAME) {
+            Field field = new Field();
+            Player player1 = new Player(menuView.getPlayer1(),Figure.X);
+            Player player2 = new Player(menuView.getPlayer1(),Figure.O);
+            CurrentMoveController currentMoveController = new CurrentMoveController();
+            MoveController moveController = new MoveController();
+            Game game = new Game.Builder()
+                    .player1(player1)
+                    .player2(player2)
+                    .field(field)
+                    .name("New game")
+                    .build();
+            ConsoleView consoleView = new ConsoleView();
+            WinnerController winnerController = new WinnerController();
+            do {
+                consoleView.show(game);
+                Point currentPoint = consoleView.getCoordinates(currentMoveController.currentMove(field));
+                moveController.move(field, currentPoint, currentMoveController.currentMove(field));
+                if (field.fieldIsFull() && winnerController.getWinner(field)==null) {
+                    System.out.println("Dead heat. In this game no winner:(");
+                    break;
+                }
+            } while (winnerController.getWinner(field)==null);
+            if (winnerController.getWinner(field)!=null)
+                System.out.println("The winner is - " + winnerController.getWinner(field));
+        }
     }
 
     public static void testAICoordinateGetter() {
@@ -20,12 +54,13 @@ public class Main {
         Field field = new Field();
         // 1 step
         Point pTest = aiCoordinateGetter.getMoveCoordinate(field);
-        field.setFigure(pTest, Figure.X);
+        MoveController moveController = new MoveController();
+        moveController.move(field, pTest, Figure.X);
         System.out.println("X's step: " + pTest.getX() + "," + pTest.getY());
         // 2 step
         pTest = aiCoordinateGetter.getMoveCoordinate(field);
         if (pTest!=null) {
-            field.setFigure(pTest, Figure.O);
+            moveController.move(field, pTest, Figure.O);
             System.out.println("O's step: " + pTest.getX() + "," + pTest.getY());
         }
         else
@@ -34,7 +69,7 @@ public class Main {
         // 3 step
         pTest = aiCoordinateGetter.getMoveCoordinate(field);
         if (pTest!=null) {
-            field.setFigure(pTest, Figure.X);
+            moveController.move(field, pTest, Figure.X);
             System.out.println("X's step: " + pTest.getX() + "," + pTest.getY());
         }
         else
@@ -43,7 +78,7 @@ public class Main {
         // 4 step
         pTest = aiCoordinateGetter.getMoveCoordinate(field);
         if (pTest!=null) {
-            field.setFigure(pTest, Figure.O);
+            moveController.move(field, pTest, Figure.O);
             System.out.println("O's step: " + pTest.getX() + "," + pTest.getY());
         }
         else
@@ -52,7 +87,7 @@ public class Main {
         // 5 step
         pTest = aiCoordinateGetter.getMoveCoordinate(field);
         if (pTest!=null) {
-            field.setFigure(pTest, Figure.X);
+            moveController.move(field, pTest, Figure.X);
             System.out.println("X's step: " + pTest.getX() + "," + pTest.getY());
         }
         else
@@ -61,7 +96,7 @@ public class Main {
         // 6 step
         pTest = aiCoordinateGetter.getMoveCoordinate(field);
         if (pTest!=null) {
-            field.setFigure(pTest, Figure.O);
+            moveController.move(field, pTest, Figure.O);
             System.out.println("O's step: " + pTest.getX() + "," + pTest.getY());
         }
         else
@@ -70,7 +105,7 @@ public class Main {
         // 7 step
         pTest = aiCoordinateGetter.getMoveCoordinate(field);
         if (pTest!=null) {
-            field.setFigure(pTest, Figure.X);
+            moveController.move(field, pTest, Figure.X);
             System.out.println("X's step: " + pTest.getX() + "," + pTest.getY());
         }
         else
@@ -79,7 +114,7 @@ public class Main {
         // 8 step
         pTest = aiCoordinateGetter.getMoveCoordinate(field);
         if (pTest!=null) {
-            field.setFigure(pTest, Figure.O);
+            moveController.move(field, pTest, Figure.O);
             System.out.println("O's step: " + pTest.getX() + "," + pTest.getY());
         }
         else
@@ -88,7 +123,7 @@ public class Main {
         // 9 step
         pTest = aiCoordinateGetter.getMoveCoordinate(field);
         if (pTest!=null) {
-            field.setFigure(pTest, Figure.X);
+            moveController.move(field, pTest, Figure.X);
             System.out.println("X's step: " + pTest.getX() + "," + pTest.getY());
         }
         else
@@ -114,38 +149,13 @@ public class Main {
 //        System.out.println("The field is empty? - " + aiCoordinateGetter.isEmptyField(field));
     }
 
-    public static void testRandom() {
-        Point p1 = new Point(0, 0);
-        Point p2 = new Point(1, 0);
-        Point p3 = new Point(2, 0);
-        Point p4 = new Point(0, 1);
-        Point p5 = new Point(1, 1);
-        Point p6 = new Point(2, 1);
-        Point p7 = new Point(0, 2);
-//        Point p8 = new Point(1, 2);
-//        Point p9 = new Point(2, 2);
-        Field field = new Field();
-        field.setFigure(p1, Figure.X);
-        field.setFigure(p2, Figure.O);
-        field.setFigure(p3, Figure.X);
-        field.setFigure(p4, Figure.O);
-        field.setFigure(p5, Figure.X);
-        field.setFigure(p6, Figure.O);
-        field.setFigure(p7, Figure.X);
-        //field.setFigure(p8, Figure.O);
-        //field.setFigure(p9, Figure.O);
-        RandomCoordinateGetter randomCoordinateGetter = new RandomCoordinateGetter();
-        Point testPoint = randomCoordinateGetter.getMoveCoordinate(field);
-        System.out.println("Radnom X coordinate: " + testPoint.getX());
-        System.out.println("Radnom Y coordinate: " + testPoint.getY());
-    }
-
     public static void testCurrentMove() {
         Point point1 = new Point(0, 0);
         Point point2 = new Point(1, 1);
         Field mainField = new Field();
-        mainField.setFigure(point1, Figure.X);
-        mainField.setFigure(point2, Figure.O);
+        MoveController moveController = new MoveController();
+        moveController.move(mainField, point1, Figure.X);
+        moveController.move(mainField, point2, Figure.O);
         CurrentMoveController CMC = new CurrentMoveController();
         System.out.println("Next move is - " + CMC.currentMove(mainField));
     }
@@ -166,15 +176,11 @@ public class Main {
         Point p8 = new Point(1, 2);
         Point p9 = new Point(2, 2);
         Field field = new Field();
-        field.setFigure(p1, Figure.X);
-        field.setFigure(p2, Figure.X);
-        field.setFigure(p3, Figure.X);
-        field.setFigure(p4, Figure.O);
-//        field.setFigure(p5, "0");
-//        field.setFigure(p6, "");
-//        field.setFigure(p7, "");
-//        field.setFigure(p8, "");
-//        field.setFigure(p9, "X");
+        MoveController moveController = new MoveController();
+        moveController.move(field, p1, Figure.X);
+        moveController.move(field, p2, Figure.X);
+        moveController.move(field, p3, Figure.X);
+        moveController.move(field, p4, Figure.O);
 
         WinnerController winnerController = new WinnerController();
         System.out.println("The winner is " + winnerController.getWinner(field));
@@ -184,6 +190,8 @@ public class Main {
         Player player1 = new Player("Tim", Figure.X);
         Player player2 = new Player("Lena", Figure.O);
         Field field = new Field();
+        MoveController moveController = new MoveController();
+
         Point p1 = new Point(0, 0);
         Point p2 = new Point(1, 0);
         Point p3 = new Point(2, 0);
@@ -193,15 +201,10 @@ public class Main {
         Point p7 = new Point(0, 2);
         Point p8 = new Point(1, 2);
         Point p9 = new Point(2, 2);
-        field.setFigure(p1, Figure.X);
-        field.setFigure(p2, Figure.X);
-        field.setFigure(p3, Figure.O);
-        field.setFigure(p4, Figure.O);
-//        field.setFigure(p5, Figure.O);
-//        field.setFigure(p6, Figure.O);
-//        field.setFigure(p7, Figure.O);
-//        field.setFigure(p8, Figure.O);
-//        field.setFigure(p9, Figure.O);
+        moveController.move(field, p1, Figure.X);
+        moveController.move(field, p2, Figure.X);
+        moveController.move(field, p3, Figure.O);
+        moveController.move(field, p4, Figure.O);
         Game game = new Game.Builder()
                 .player1(new Player("Timur", Figure.X))
                 .player2(new Player("Lena", Figure.O))
@@ -211,6 +214,4 @@ public class Main {
         ConsoleView consoleView = new ConsoleView();
         consoleView.show(game);
     }
-
-
 }

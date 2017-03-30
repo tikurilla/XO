@@ -1,9 +1,11 @@
 package view;
 
+import exceptions.InvalidPointException;
 import model.Field;
+import model.Figure;
 import model.Point;
 
-public class AICoordinateGetter implements ICoordinateGetter {
+public class AICoordinateGetter {
 
     private final int FIRST_POSITION = 1;
 
@@ -39,17 +41,23 @@ public class AICoordinateGetter implements ICoordinateGetter {
                 Point pFree;
                 if (sameFigures(field, p1, p2)) {
                     pFree = new Point(getLimitedPosition(0, field.getSize() - 1 , x + 2), y);
-                    if (field.getFigure(pFree)==null)
-                        return pFree;
-                    else
-                        return null;
+                    try {
+                        if (field.getFigure(pFree)==null)
+                            return pFree;
+                    }
+                    catch (InvalidPointException e) {
+                        e.printStackTrace();
+                    }
                 }
                 if (sameFigures(field, p1, p3)) {
                     pFree = new Point(getLimitedPosition(0, field.getSize() - 1 , x + 1), y);
-                    if (field.getFigure(pFree)==null)
-                        return pFree;
-                    else
-                        return null;
+                    try {
+                        if (field.getFigure(pFree)==null)
+                            return pFree;
+                    }
+                    catch (InvalidPointException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }
@@ -66,17 +74,23 @@ public class AICoordinateGetter implements ICoordinateGetter {
                 Point pFree;
                 if (sameFigures(field, p1, p2)) {
                     pFree = new Point(x, getLimitedPosition(0, field.getSize() - 1 , y + 2));
-                    if (field.getFigure(pFree)==null)
-                        return pFree;
-                    else
-                        return null;
+                    try {
+                        if (field.getFigure(pFree)==null)
+                            return pFree;
+                    }
+                    catch (InvalidPointException e) {
+                        e.printStackTrace();
+                    }
                 }
                 if (sameFigures(field, p1, p3)) {
                     pFree = new Point(x, getLimitedPosition(0, field.getSize() - 1 , y + 1));
-                    if (field.getFigure(pFree)==null)
-                        return pFree;
-                    else
-                        return null;
+                    try {
+                        if (field.getFigure(pFree)==null)
+                            return pFree;
+                    }
+                    catch (InvalidPointException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }
@@ -95,18 +109,24 @@ public class AICoordinateGetter implements ICoordinateGetter {
             if (sameFigures(field, p1, p2)) {
                 pFree = new Point(getLimitedPosition(0, field.getSize() - 1 , i + 2),
                                   getLimitedPosition(0, field.getSize() - 1 , i + 2));
-                if (field.getFigure(pFree)==null)
-                    return pFree;
-                else
-                    return null;
+                try {
+                    if (field.getFigure(pFree)==null)
+                        return pFree;
+                }
+                catch (InvalidPointException e) {
+                    e.printStackTrace();
+                }
             }
             if (sameFigures(field, p1, p3)) {
                 pFree = new Point(getLimitedPosition(0, field.getSize() - 1 , i + 1),
                                   getLimitedPosition(0, field.getSize() - 1 , i + 1));
-                if (field.getFigure(pFree)==null)
-                    return pFree;
-                else
-                    return null;
+                try {
+                    if (field.getFigure(pFree)==null)
+                        return pFree;
+                }
+                catch (InvalidPointException e) {
+                    e.printStackTrace();
+                }
             }
         }
         return null;
@@ -122,33 +142,56 @@ public class AICoordinateGetter implements ICoordinateGetter {
             Point pFree;
             if (sameFigures(field, p1, p2)) {
                 pFree = new Point(getLimitedPosition(0, field.getSize() - 1 , i + 2), i);
-                if (field.getFigure(pFree)==null)
-                    return pFree;
-                else
-                    return null;
+                try {
+                    if (field.getFigure(pFree)==null)
+                        return pFree;
+                }
+                catch (InvalidPointException e) {
+                    e.printStackTrace();
+                }
             }
             if (sameFigures(field, p1, p3)) {
                 pFree = new Point(getLimitedPosition(0, field.getSize() - 1 , i + 1),
                             getLimitedPosition(0, field.getSize() - 1 , i + 1));
-                if (field.getFigure(pFree)==null)
-                    return pFree;
-                else
-                    return null;
+                try {
+                    if (field.getFigure(pFree)==null)
+                        return pFree;
+                }
+                catch (InvalidPointException e) {
+                    e.printStackTrace();
+                }
             }
             if (sameFigures(field, p2, p3)) {
                 pFree = new Point(i, getLimitedPosition(0, field.getSize() - 1 , i + 2));
-                if (field.getFigure(pFree)==null)
-                    return pFree;
-                else
-                    return null;
+                try {
+                    if (field.getFigure(pFree)==null)
+                        return pFree;
+                }
+                catch (InvalidPointException e) {
+                    e.printStackTrace();
+                }
             }
         }
         return null;
     }
 
     private boolean sameFigures(final Field field, final Point p1, final Point p2) {
-        if (field.getFigure(p1) != null && field.getFigure(p2) != null
-                && field.getFigure(p1).equals(field.getFigure(p2))) {
+        Figure figure1 = Figure.O;
+        Figure figure2 = Figure.O;
+        try {
+            figure1 = field.getFigure(p1);
+        }
+        catch (InvalidPointException e) {
+            e.printStackTrace();
+        }
+        try {
+            figure2 = field.getFigure(p2);
+        }
+        catch (InvalidPointException e) {
+            e.printStackTrace();
+        }
+        if (figure1 != null && figure2 != null
+                && figure1.equals(figure2)) {
             return true;
         }
         return false;
@@ -169,8 +212,13 @@ public class AICoordinateGetter implements ICoordinateGetter {
         for (int x = 0; x < field.getSize(); x = x + 1) {
             for (int y = 0; y < field.getSize(); y = y + 1) {
                 Point point = new Point(x, y);
-                if (field.getFigure(point) != null)
-                    return false;
+                try {
+                    if (field.getFigure(point) != null)
+                        return false;
+                }
+                catch (InvalidPointException e) {
+                    e.printStackTrace();
+                }
             }
         }
         return true;
