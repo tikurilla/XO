@@ -3,13 +3,19 @@ import exceptions.AlreadyOccupiedException;
 import exceptions.InvalidPointException;
 
 public class Field {
-    private static final int MIN_FIELDSIZE = 0;
-    private static final int MAX_FIELDSIZE = 2;
+    private final int MIN_COORDINATE = 0;
 
-    public Figure[][] figures = new Figure[MAX_FIELDSIZE + 1][MAX_FIELDSIZE + 1];
+    private int fieldSize;
+
+    private Figure[][] figures;
+
+    public Field(final int fieldSize) {
+        this.fieldSize = fieldSize;
+        figures = new Figure[fieldSize][fieldSize];
+    }
 
     public int getSize () {
-        return MAX_FIELDSIZE + 1;
+        return fieldSize;
     }
 
     public Figure getFigure (Point point) throws InvalidPointException {
@@ -40,6 +46,6 @@ public class Field {
     }
 
     private boolean checkCoordinate(final int value) {
-        return !(value < MIN_FIELDSIZE || value > MAX_FIELDSIZE);
+        return !(value < MIN_COORDINATE || value > this.fieldSize);
     }
 }

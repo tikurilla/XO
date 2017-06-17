@@ -19,9 +19,10 @@ public class Main {
 //        testRandom();
 //        testAICoordinateGetter();
 //        testConsoleView();
+        final int fieldSize = 3;
         MenuView menuView = new MenuView();
         if (menuView.showMenuWithResult() == TWO_PLAYER_GAME) {
-            Field field = new Field();
+            Field field = new Field(fieldSize);
             Player player1 = new Player(menuView.getPlayer1(),Figure.X);
             Player player2 = new Player(menuView.getPlayer1(),Figure.O);
             CurrentMoveController currentMoveController = new CurrentMoveController();
@@ -51,7 +52,8 @@ public class Main {
     public static void testAICoordinateGetter() {
         AICoordinateGetter aiCoordinateGetter = new AICoordinateGetter();
         WinnerController winnerController = new WinnerController();
-        Field field = new Field();
+        final int fieldSize = 3;
+        Field field = new Field(fieldSize);
         // 1 step
         Point pTest = aiCoordinateGetter.getMoveCoordinate(field);
         MoveController moveController = new MoveController();
@@ -152,7 +154,8 @@ public class Main {
     public static void testCurrentMove() {
         Point point1 = new Point(0, 0);
         Point point2 = new Point(1, 1);
-        Field mainField = new Field();
+        final int fieldSize = 3;
+        Field mainField = new Field(fieldSize);
         MoveController moveController = new MoveController();
         moveController.move(mainField, point1, Figure.X);
         moveController.move(mainField, point2, Figure.O);
@@ -175,7 +178,8 @@ public class Main {
         Point p7 = new Point(0, 2);
         Point p8 = new Point(1, 2);
         Point p9 = new Point(2, 2);
-        Field field = new Field();
+        final int fieldSize = 3;
+        Field field = new Field(fieldSize);
         MoveController moveController = new MoveController();
         moveController.move(field, p1, Figure.X);
         moveController.move(field, p2, Figure.X);
@@ -189,7 +193,8 @@ public class Main {
     public static  void  testConsoleView() {
         Player player1 = new Player("Tim", Figure.X);
         Player player2 = new Player("Lena", Figure.O);
-        Field field = new Field();
+        final int fieldSize = 3;
+        Field field = new Field(fieldSize);
         MoveController moveController = new MoveController();
 
         Point p1 = new Point(0, 0);

@@ -20,7 +20,7 @@ public class ConsoleView {
         final StringBuilder fieldBuilder = new StringBuilder();
         for (int y = 0; y < field.getSize(); y++) {
             if (y != 0)
-                generateSeparator(fieldBuilder);
+                generateSeparator(fieldBuilder, field);
             generateLine(field, y, fieldBuilder);
         }
         System.out.println(fieldBuilder.toString());
@@ -61,9 +61,11 @@ public class ConsoleView {
         }
     }
 
-    void generateSeparator(final StringBuilder sb) {
-        final String separator = "~~~~~~~~~~~\n";
-        sb.append(separator);
+    void generateSeparator(final StringBuilder sb , final Field field) {
+        for(int i = 0; i < field.getSize() - 1; i++) {
+            sb.append("----");
+        }
+        sb.append("---\n");
     }
 
 }

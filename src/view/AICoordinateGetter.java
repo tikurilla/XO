@@ -10,8 +10,9 @@ public class AICoordinateGetter {
     private final int FIRST_POSITION = 1;
 
     public Point getMoveCoordinate(final Field field) {
+        int firstPosition = field.getSize()/2;
         if (isEmptyField(field)==true) {
-            return new Point(FIRST_POSITION, FIRST_POSITION);
+            return new Point(firstPosition, firstPosition);
         }
         else if (getOneOfThreeInRow(field)!=null) {
             return getOneOfThreeInRow(field);

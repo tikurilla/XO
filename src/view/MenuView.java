@@ -26,14 +26,25 @@ public class MenuView {
         switch (choice) {
             case TWO_PLAYER_GAME :
                 System.out.println("Collect some information..");
-                do {
+//                do {
+//                    playersHaveEmptyNames = startGame();
+//                } while (playersHaveEmptyNames==true);
+                while(player1==null) {
                     try {
-                        playersHaveEmptyNames = startGame();
+                        player1 = this.getPlayerNameFromConsole(false);
                     }
                     catch (EmptyLineException e) {
-                        System.out.println("Please enter valid name."); //e.printStackTrace();
+                        System.out.println("Please enter valid name.");
                     }
-                } while (playersHaveEmptyNames==false);
+                }
+                while(player2==null) {
+                    try {
+                        player2 = this.getPlayerNameFromConsole(true);
+                    }
+                    catch (EmptyLineException e) {
+                        System.out.println("Please enter valid name.");
+                    }
+                }
                 return choice;
             case EXIT :
                 return choice;
@@ -51,27 +62,18 @@ public class MenuView {
         return player2;
     }
 
-    private boolean startGame() throws EmptyLineException {
-        final Scanner scannerP1 = new Scanner(System.in);
-        System.out.println("1st player will play X figures. Enter 1st player name: ");
-        player1 = scannerP1.nextLine();
-        if (player1.isEmpty())
+    private String getPlayerNameFromConsole(boolean playerNumber) throws EmptyLineException  {
+        String player;
+        final Scanner scannerP = new Scanner(System.in);
+        if (!playerNumber) {
+            System.out.println("1st player will play X figures. Enter 1st player name: ");
+        }
+        else {
+            System.out.println("2nd player will play O figures. Enter 2nd player name: ");
+        }
+        player = scannerP.nextLine();
+        if (player.isEmpty())
             throw new EmptyLineException();
-        final Scanner scannerP2 = new Scanner(System.in);
-        System.out.println("2nd player will play O figures. Enter 2nd player name: ");
-        player2 = scannerP2.nextLine();
-        if (player2.isEmpty())
-            throw new EmptyLineException();
-        if (player1.isEmpty()==false && player2.isEmpty()==false)
-            return true;
-        else
-            return false;
-        // <TASK>
-        // вынести код по вводу имени каждого игрока в отдельный метод ввиду того, что при проверке на EmptyLineException()
-        // для второго игрока в случае пустой сткроки нужно вновь ввести имя 1-го игрока.
-        // </TASK>
+        return player;
     }
-
-
-
 }
