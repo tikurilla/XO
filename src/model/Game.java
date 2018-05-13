@@ -33,7 +33,6 @@ public class Game {
         return name;
     }
 
-    // BEGIN (write your solution here)
     public static class Builder {
         private Player player1;
 
@@ -83,6 +82,4 @@ public class Game {
             return new Game(this);
         }
     }
-    // END
-
 }

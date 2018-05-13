@@ -6,9 +6,6 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by zaibatsu on 20.03.2017.
- */
 public class FieldTest {
     @Test
     public void getSize() throws Exception {

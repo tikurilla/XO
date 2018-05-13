@@ -13,12 +13,6 @@ public class Main {
     private static final int EXIT = 3;
 
     public static void main (String[] args) {
-//        testCurrentMove();
-//        testMenuView();
-//        testWinnerController();
-//        testRandom();
-//        testAICoordinateGetter();
-//        testConsoleView();
         final int fieldSize = 3;
         MenuView menuView = new MenuView();
         if (menuView.showMenuWithResult() == TWO_PLAYER_GAME) {
@@ -40,7 +34,7 @@ public class Main {
                 Point currentPoint = consoleView.getCoordinates(currentMoveController.currentMove(field));
                 moveController.move(field, currentPoint, currentMoveController.currentMove(field));
                 if (field.fieldIsFull() && winnerController.getWinner(field)==null) {
-                    System.out.println("Dead heat. In this game no winner:(");
+                    System.out.println("Dead heat. No winner in this game :(");
                     break;
                 }
             } while (winnerController.getWinner(field)==null);

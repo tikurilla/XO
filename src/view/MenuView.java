@@ -1,6 +1,7 @@
 package view;
 
 import exceptions.EmptyLineException;
+import model.Figure;
 
 import java.util.Scanner;
 
@@ -22,16 +23,22 @@ public class MenuView {
         System.out.println("->");
         final Scanner scanner = new Scanner(System.in);
         int choice = scanner.nextInt();
-        boolean playersHaveEmptyNames = false;
         switch (choice) {
-            case TWO_PLAYER_GAME :
-                System.out.println("Collect some information..");
-//                do {
-//                    playersHaveEmptyNames = startGame();
-//                } while (playersHaveEmptyNames==true);
+            case ONE_PLAYER_GAME :
                 while(player1==null) {
                     try {
-                        player1 = this.getPlayerNameFromConsole(false);
+                        player1 = this.getPlayerNameForOnePlayerGame();
+                    }
+                    catch (EmptyLineException e) {
+                        System.out.println("Please enter valid name.");
+                    }
+                }
+                return choice;
+            case TWO_PLAYER_GAME :
+                System.out.println("Collect some information..");
+                while(player1==null) {
+                    try {
+                        player1 = this.getPlayerNameForTwoPlayerGame(false);
                     }
                     catch (EmptyLineException e) {
                         System.out.println("Please enter valid name.");
@@ -39,7 +46,7 @@ public class MenuView {
                 }
                 while(player2==null) {
                     try {
-                        player2 = this.getPlayerNameFromConsole(true);
+                        player2 = this.getPlayerNameForTwoPlayerGame(true);
                     }
                     catch (EmptyLineException e) {
                         System.out.println("Please enter valid name.");
@@ -49,8 +56,8 @@ public class MenuView {
             case EXIT :
                 return choice;
             default :
-                System.out.println("Select valid menu number!");
-                return 0;
+                System.out.println("Please select valid menu number..");
+                return showMenuWithResult();
         }
     }
 
@@ -62,8 +69,8 @@ public class MenuView {
         return player2;
     }
 
-    private String getPlayerNameFromConsole(boolean playerNumber) throws EmptyLineException  {
-        String player;
+    private String getPlayerNameForTwoPlayerGame(boolean playerNumber) throws EmptyLineException  {
+        String playerName;
         final Scanner scannerP = new Scanner(System.in);
         if (!playerNumber) {
             System.out.println("1st player will play X figures. Enter 1st player name: ");
@@ -71,9 +78,21 @@ public class MenuView {
         else {
             System.out.println("2nd player will play O figures. Enter 2nd player name: ");
         }
-        player = scannerP.nextLine();
-        if (player.isEmpty())
+        playerName = scannerP.nextLine();
+        if (playerName.isEmpty())
             throw new EmptyLineException();
-        return player;
+        return playerName;
     }
+
+    private String getPlayerNameForOnePlayerGame() throws EmptyLineException {
+        String playerName;
+        final Scanner scannerP = new Scanner(System.in);
+        System.out.println("Please enter your name:");
+        playerName = scannerP.nextLine();
+        if (playerName.isEmpty())
+            throw new EmptyLineException();
+        return playerName;
+    }
+
+
 }
